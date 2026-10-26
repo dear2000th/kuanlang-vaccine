@@ -603,16 +603,14 @@
                             <div class="alert-desc">เกณฑ์ส่งตรวจคือช่วง 9 เดือน, 1 ปี 6 เดือน และ 2 ปี 6 เดือน</div>`;
     }
 
-    // 4. คำนวณปริมาณ Ferdek Drops (เกณฑ์ปรับปรุงใหม่)
-    // - 6 เดือน ถึง 2 ปีครึ่ง (6 – 30 เดือน): 0.5 ml สัปดาห์ละ 1 ครั้ง
-    // - 2 ปีครึ่งขึ้นไป ถึง 4 ปีครึ่ง (31 – 54 เดือน): 1.0 ml สัปดาห์ละ 1 ครั้ง
+    // 4. คำนวณปริมาณ Ferdek Drops (เกณฑ์ใหม่: 6-30 เดือน = 0.5 ml, 31-48 เดือน = 1.0 ml)
     const ferdekEl = document.getElementById('ferdekDose');
     if (totalAgeMonths >= 6 && totalAgeMonths <= 30) {
       ferdekEl.innerHTML = `กิน <b>0.5 มิลลิลิตร (ml)</b> สัปดาห์ละ 1 ครั้ง`;
-    } else if (totalAgeMonths >= 31 && totalAgeMonths <= 54) {
+    } else if (totalAgeMonths >= 31 && totalAgeMonths <= 48) {
       ferdekEl.innerHTML = `กิน <b>1.0 มิลลิลิตร (ml)</b> สัปดาห์ละ 1 ครั้ง`;
     } else {
-      ferdekEl.innerHTML = `<span style="color: var(--text-muted); font-size:0.9rem;">ไม่อยู่ในเกณฑ์รับยาน้ำเสริมธาตุเหล็กตามรอบนี้ (อายุต่ำกว่า 6 เดือน หรือมากกว่า 4 ปีครึ่ง)</span>`;
+      ferdekEl.innerHTML = `<span style="color: var(--text-muted); font-size:0.9rem;">ไม่อยู่ในเกณฑ์รับยาน้ำเสริมธาตุเหล็กตามรอบนี้ (อายุต่ำกว่า 6 เดือน หรือมากกว่า 4 ปี)</span>`;
     }
 
     // 5. คำนวณพาราเซตามอล (น้ำหนัก 10 กก. = 1 ช้อนชา)
