@@ -12,15 +12,16 @@
     :root {
       --primary: #007AFF;
       --primary-gradient: linear-gradient(135deg, #0A84FF 0%, #0062D2 100%);
+      --pcv-primary: #5856D6;
+      --pcv-gradient: linear-gradient(135deg, #5E5CE6 0%, #3634A3 100%);
       --bg-color: #F2F2F7;
-      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: rgba(255, 255, 255, 0.94);
       --card-border: rgba(0, 0, 0, 0.05);
       --text-main: #1C1C1E;
       --text-muted: #8E8E93;
       --accent-green: #34C759;
       --accent-orange: #FF9500;
       --accent-red: #FF3B30;
-      --accent-purple: #AF52DE;
       --radius-sm: 10px;
       --radius-md: 16px;
       --radius-lg: 22px;
@@ -49,7 +50,7 @@
       max-width: 440px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       padding-bottom: 30px;
     }
 
@@ -57,22 +58,98 @@
     .header-card {
       background: var(--primary-gradient);
       color: #fff;
-      padding: 22px 20px;
+      padding: 20px;
       border-radius: var(--radius-lg);
-      box-shadow: 0 10px 25px rgba(0, 122, 255, 0.25);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 122, 255, 0.22);
+      transition: background 0.3s ease;
+    }
+    .header-card.pcv-mode {
+      background: var(--pcv-gradient);
+      box-shadow: 0 10px 25px rgba(88, 86, 214, 0.25);
+    }
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .btn-whats-new {
+      background: #FFFFFF;
+      color: var(--primary);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: transform 0.15s ease;
+    }
+    .header-card.pcv-mode .btn-whats-new {
+      color: var(--pcv-primary);
+    }
+    .btn-whats-new:active {
+      transform: scale(0.95);
     }
     .header-card h1 {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: -0.3px;
       margin-bottom: 4px;
     }
     .header-card p {
-      font-size: 0.85rem;
-      opacity: 0.9;
+      font-size: 0.84rem;
+      opacity: 0.92;
       font-weight: 300;
+    }
+
+    /* Main Segmented Tabs (iOS Style) */
+    .segmented-control {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #E5E5EA;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 10px 8px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #636366;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .seg-btn.active {
+      background: #FFFFFF;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
 
     /* Cards */
@@ -157,11 +234,16 @@
       gap: 6px;
       background: #E5F1FF;
       color: var(--primary);
-      padding: 6px 14px;
+      padding: 8px 14px;
       border-radius: 20px;
       font-weight: 600;
-      font-size: 0.88rem;
-      margin-bottom: 14px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      width: 100%;
+    }
+    .age-badge.pcv-badge {
+      background: #EFEFFE;
+      color: var(--pcv-primary);
     }
 
     /* Alert Boxes */
@@ -177,6 +259,16 @@
       background: #FFF2D6;
       border-left: 4px solid var(--accent-orange);
       color: #7D4400;
+    }
+    .status-alert.danger {
+      background: #FFE5E5;
+      border-left: 4px solid var(--accent-red);
+      color: #B71C1C;
+    }
+    .status-alert.success {
+      background: #E8F5E9;
+      border-left: 4px solid var(--accent-green);
+      color: #1B5E20;
     }
     .status-alert.normal {
       background: #F4F4F6;
@@ -211,23 +303,22 @@
 
     /* Dose Pill */
     .dose-tag {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: #1C1C1E;
       background: #FFFFFF;
-      padding: 6px 12px;
+      padding: 8px 12px;
       border-radius: 8px;
       border: 1px solid #E5E5EA;
-      display: inline-block;
+      display: block;
       margin-top: 4px;
     }
 
-    /* Vaccine Timeline List */
+    /* Timeline List */
     .timeline {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      position: relative;
     }
     .timeline-item {
       background: #FAFAFC;
@@ -237,20 +328,21 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      transition: all 0.2s;
     }
     .tl-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
     }
     .tl-age {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--primary);
     }
     .tl-week-badge {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 600;
       padding: 3px 8px;
       border-radius: 6px;
@@ -266,8 +358,8 @@
       color: #E65100;
     }
     .tl-date {
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.02rem;
+      font-weight: 700;
       color: #111;
     }
     .tl-vaccines {
@@ -278,6 +370,284 @@
       border-radius: 6px;
       border: 1px solid #ECECEC;
     }
+
+    /* Eligibility Status Tags */
+    .elig-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .elig-badge.no-inject {
+      background: #FFE5E5;
+      color: #D32F2F;
+      border: 1px solid #FFCDD2;
+    }
+    .elig-badge.ready-inject {
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: 1px solid #C8E6C9;
+    }
+    .shift-notice {
+      font-size: 0.76rem;
+      color: #B25000;
+      background: #FFF8E7;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent-orange);
+    }
+
+    /* PCV Condition Selector Cards */
+    .pcv-cond-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .pcv-cond-btn {
+      background: #F8F8FA;
+      border: 1.5px solid #E5E5EA;
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .pcv-cond-btn.active {
+      background: #F4F3FF;
+      border-color: var(--pcv-primary);
+      box-shadow: 0 4px 12px rgba(88, 86, 214, 0.14);
+    }
+    .pcv-cond-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      gap: 6px;
+    }
+    .pcv-cond-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1C1C1E;
+    }
+    .pcv-cond-btn.active .pcv-cond-title {
+      color: var(--pcv-primary);
+    }
+    .pcv-cond-sub {
+      font-size: 0.8rem;
+      color: #636366;
+    }
+    .cond-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .cond-pill.ok {
+      background: var(--accent-green);
+      color: #fff;
+    }
+    .cond-pill.not-yet {
+      background: var(--accent-red);
+      color: #fff;
+    }
+
+    .pcv-step-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E5EA;
+      border-left: 4px solid var(--pcv-primary);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .pcv-step-card.not-eligible {
+      border-left-color: var(--accent-red);
+      background: #FFFBFB;
+    }
+    .pcv-step-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--pcv-primary);
+    }
+    .pcv-step-card.not-eligible .pcv-step-title {
+      color: #C62828;
+    }
+    .pcv-target-info {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* App Footer */
+    .app-footer {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .footer-link {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* ================= MODAL POP-UP (อะไรใหม่) ================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 18px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 410px;
+      max-height: 82vh;
+      background: #FFFFFF;
+      border-radius: 22px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(15px) scale(0.97);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.show .modal-box {
+      transform: translateY(0) scale(1);
+    }
+    .modal-header {
+      padding: 18px 20px 14px 20px;
+      border-bottom: 1px solid #ECECEC;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FAFAFC;
+    }
+    .modal-header-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1C1C1E;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-close-modal {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: #E5E5EA;
+      color: #636366;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-body {
+      padding: 18px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .changelog-item {
+      border-left: 3px solid #D1D1D6;
+      padding-left: 14px;
+      position: relative;
+    }
+    .changelog-item.latest {
+      border-left-color: var(--primary);
+    }
+    .changelog-ver-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .changelog-ver {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1C1C1E;
+    }
+    .changelog-item.latest .changelog-ver {
+      color: var(--primary);
+    }
+    .changelog-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 8px;
+      background: #E5F1FF;
+      color: var(--primary);
+    }
+    .changelog-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .changelog-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .changelog-list li {
+      font-size: 0.83rem;
+      color: #3A3A3C;
+      line-height: 1.45;
+      position: relative;
+      padding-left: 14px;
+    }
+    .changelog-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    .modal-footer {
+      padding: 12px 20px 16px 20px;
+      border-top: 1px solid #ECECEC;
+      background: #FAFAFC;
+    }
+    .btn-modal-ok {
+      width: 100%;
+      height: 44px;
+      background: var(--primary-gradient);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -285,22 +655,42 @@
 <div class="app-container">
 
   <!-- Header Section -->
-  <div class="header-card">
-    <h1>🗓️ ตารางนัดวัคซีน รพ.สต.ควนลัง</h1>
-    <p>ระบบคำนวณวันนัดตามเกณฑ์มาตรฐาน & การตรวจคัดกรอง</p>
+  <div id="mainHeader" class="header-card">
+    <div class="header-top-row">
+      <div class="version-pill">
+        <span>🚀 เวอร์ชัน 1.4.0</span>
+        <span>•</span>
+        <span>อัปเดต 9 พ.ย. 2569</span>
+      </div>
+      <button type="button" class="btn-whats-new" onclick="openChangelogModal()">
+        ✨ อะไรใหม่
+      </button>
+    </div>
+    <h1 id="headerTitle">🗓️ ตารางนัดวัคซีน รพ.สต.ควนลัง</h1>
+    <p id="headerSub">คำนวณวันนัดเมื่ออายุครบบริบูรณ์จริง & การตรวจคัดกรอง</p>
   </div>
 
-  <!-- Form Section -->
+  <!-- Navigation Tabs -->
+  <div class="segmented-control">
+    <button type="button" id="tabBtnMain" class="seg-btn active" onclick="switchTab('main')">
+      💉 วัคซีนพื้นฐาน & ยา
+    </button>
+    <button type="button" id="tabBtnPcv" class="seg-btn" onclick="switchTab('pcv')">
+      🛡️ วัคซีน PCV
+    </button>
+  </div>
+
+  <!-- Shared Form Section -->
   <div class="ios-card">
-    <div class="card-title">👶 ข้อมูลเด็ก</div>
+    <div class="card-title">👶 ข้อมูลวันเกิดและน้ำหนักเด็ก</div>
     
     <div class="input-label" style="margin-bottom:6px;">วัน/เดือน/ปี เกิด (พ.ศ.)</div>
     <div class="dob-grid">
       <div class="input-group">
-        <select id="dobDay" class="ios-select"></select>
+        <select id="dobDay" class="ios-select" onchange="autoRecalculate()"></select>
       </div>
       <div class="input-group">
-        <select id="dobMonth" class="ios-select">
+        <select id="dobMonth" class="ios-select" onchange="autoRecalculate()">
           <option value="1">มกราคม</option>
           <option value="2">กุมภาพันธ์</option>
           <option value="3">มีนาคม</option>
@@ -316,33 +706,28 @@
         </select>
       </div>
       <div class="input-group">
-        <select id="dobYear" class="ios-select"></select>
+        <select id="dobYear" class="ios-select" onchange="autoRecalculate()"></select>
       </div>
     </div>
 
-    <div class="input-group" style="margin-bottom: 16px;">
-      <div class="input-label">น้ำหนักตัวเด็ก (กิโลกรัม)</div>
-      <input type="number" id="childWeight" class="ios-input" placeholder="เช่น 7.5" step="0.1" min="1" max="40">
+    <div class="input-group" id="weightInputGroup" style="margin-bottom: 16px;">
+      <div class="input-label">น้ำหนักตัวเด็ก (กิโลกรัม) *สำหรับคำนวณยาพาราเซตามอล</div>
+      <input type="number" id="childWeight" class="ios-input" placeholder="เช่น 7.5" step="0.1" min="1" max="40" oninput="autoRecalculate()">
     </div>
 
-    <button type="button" class="btn-calc" onclick="calculateAll()">คำนวณวันนัดและการดูแล</button>
+    <button type="button" class="btn-calc" id="calcBtn" onclick="calculateAll(true)">คำนวณข้อมูลทันที</button>
   </div>
 
-  <!-- Results Section -->
-  <div id="resultsArea" style="display: none; display: flex; flex-direction: column; gap: 16px;">
+  <!-- ================= TAB 1: วัคซีนพื้นฐาน & ยา ================= -->
+  <div id="tabContentMain" style="display: none; flex-direction: column; gap: 14px;">
     
-    <!-- Current Age Card -->
+    <!-- Current Age & Screenings Card -->
     <div class="ios-card">
-      <div class="card-title">📊 การประเมินอายุปัจจุบัน</div>
-      <div id="ageBadge" class="age-badge">คำนวณ...</div>
+      <div class="card-title">📊 การประเมินอายุและคัดกรอง</div>
+      <div id="ageBadgeMain" class="age-badge">คำนวณ...</div>
       
-      <!-- Hct Screening Alert -->
       <div id="hctAlert" class="status-alert"></div>
-
-      <!-- DSPM Screening Alert -->
       <div id="dspmAlert" class="status-alert"></div>
-
-      <!-- Dental Screening Alert -->
       <div id="dentalAlert" class="status-alert"></div>
     </div>
 
@@ -350,13 +735,11 @@
     <div class="ios-card">
       <div class="card-title">💊 ปริมาณการจ่ายยาที่เกี่ยวข้อง</div>
       
-      <!-- Ferdek Drops -->
       <div style="margin-bottom: 14px;">
         <div style="font-weight: 600; font-size: 0.9rem; color: #333;">ยาน้ำเสริมธาตุเหล็ก (Ferdek Drops):</div>
         <div id="ferdekDose" class="dose-tag">-</div>
       </div>
 
-      <!-- Paracetamol -->
       <div>
         <div style="font-weight: 600; font-size: 0.9rem; color: #333;">ยาพาราเซตามอลยาน้ำเชื่อมสูตรสำหรับเด็ก:</div>
         <div id="paraDose" class="dose-tag">-</div>
@@ -366,20 +749,174 @@
       </div>
     </div>
 
-    <!-- Vaccine Schedule Timeline -->
+    <!-- Routine Vaccine Schedule Timeline -->
     <div class="ios-card">
-      <div class="card-title">💉 ตารางวันนัดวัคซีน รพ.สต.ควนลัง</div>
+      <div class="card-title">💉 ตารางวันนัดวัคซีนพื้นฐาน รพ.สต.ควนลัง</div>
       <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
-        * ตรงตามตารางให้บริการวัคซีนสัปดาห์ที่ 2 และ 4 ของ รพ.สต.ควนลัง
+        * นัดฉีดเมื่ออายุเต็มบริบูรณ์ตามเกณฑ์จริง หากวันนัดใดอายุยังไม่ครบจะเลื่อนไปรอบถัดไปอัตโนมัติ
       </p>
       <div id="timelineContainer" class="timeline"></div>
+    </div>
+  </div>
+
+  <!-- ================= TAB 2: วัคซีน PCV ================= -->
+  <div id="tabContentPcv" style="display: none; flex-direction: column; gap: 14px;">
+    
+    <div class="ios-card">
+      <div class="card-title">🛡️ คำนวณตารางนัดวัคซีน PCV</div>
+      <div id="ageBadgePcv" class="age-badge pcv-badge">คำนวณ...</div>
+
+      <!-- Overall PCV Eligibility Banner -->
+      <div id="pcvOverallStatus" class="status-alert"></div>
+
+      <div class="input-label" style="margin-bottom: 8px; margin-top: 6px;">เลือกเงื่อนไขการฉีดวัคซีน PCV:</div>
+      
+      <div class="pcv-cond-selector">
+        <button type="button" id="pcvCondBtn1" class="pcv-cond-btn active" onclick="selectPcvCondition(1)">
+          <div class="pcv-cond-header">
+            <span class="pcv-cond-title">เงื่อนไขที่ 1 (เริ่มเข็มแรก 3 เดือนเต็ม)</span>
+            <span id="pcvPill1" class="cond-pill"></span>
+          </div>
+          <div class="pcv-cond-sub">เข็ม 1: <b>3 เดือน</b> • เข็ม 2: <b>5 เดือน</b> • เข็ม 3: <b>1 ปี</b></div>
+        </button>
+
+        <button type="button" id="pcvCondBtn2" class="pcv-cond-btn" onclick="selectPcvCondition(2)">
+          <div class="pcv-cond-header">
+            <span class="pcv-cond-title">เงื่อนไขที่ 2 (เริ่มเข็มแรก 5 เดือนเต็ม)</span>
+            <span id="pcvPill2" class="cond-pill"></span>
+          </div>
+          <div class="pcv-cond-sub">เข็ม 1: <b>5 เดือน</b> • เข็ม 2: <b>7 เดือน</b> • เข็ม 3: <b>1 ปี</b></div>
+        </button>
+
+        <button type="button" id="pcvCondBtn3" class="pcv-cond-btn" onclick="selectPcvCondition(3)">
+          <div class="pcv-cond-header">
+            <span class="pcv-cond-title">เงื่อนไขที่ 3 (เริ่มเข็มแรก 9 เดือนเต็ม)</span>
+            <span id="pcvPill3" class="cond-pill"></span>
+          </div>
+          <div class="pcv-cond-sub">เข็ม 1: <b>9 เดือน</b> • เข็ม 2: <b>1 ปี</b> • เข็ม 3: <b>1 ปี 4 เดือน</b></div>
+        </button>
+      </div>
+
+      <!-- Selected Condition Warning if Age not met -->
+      <div id="pcvCondWarning" class="status-alert danger" style="display: none;"></div>
+
+      <div class="card-title" style="margin-top: 6px; margin-bottom: 10px; font-size: 0.95rem;">
+        📅 วันนัดฉีดวัคซีน PCV (รพ.สต.ควนลัง)
+      </div>
+      <div id="pcvTimelineContainer" class="timeline"></div>
     </div>
 
   </div>
 
+  <!-- Footer -->
+  <div class="app-footer">
+    <div>ระบบคำนวณนัดวัคซีน รพ.สต.ควนลัง • <b>Version 1.4.0</b></div>
+    <div>อัปเดตล่าสุด: 9 พฤศจิกายน 2569 | <span class="footer-link" onclick="openChangelogModal()">ดูประวัติการอัปเดต (อะไรใหม่)</span></div>
+  </div>
+
+</div>
+
+<!-- ================= POP-UP MODAL: อะไรใหม่ (Changelog) ================= -->
+<div id="changelogModal" class="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-title">✨ อะไรใหม่ในแอปพลิเคชัน</div>
+      <button type="button" class="btn-close-modal" onclick="closeChangelogModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      
+      <!-- Version 1.4.0 -->
+      <div class="changelog-item latest">
+        <div class="changelog-ver-row">
+          <span class="changelog-ver">เวอร์ชัน 1.4.0</span>
+          <span class="changelog-tag">ล่าสุด</span>
+        </div>
+        <div class="changelog-date">📅 อัปเดตเมื่อ: 9 พฤศจิกายน 2569</div>
+        <ul class="changelog-list">
+          <li>เพิ่มระบบตรวจสอบ <b>"อายุเต็มบริบูรณ์จริง"</b> ณ วันนัดคลินิก หากวันคลินิกรอบแรกของเดือนนั้นเด็กยังอายุไม่เต็มเกณฑ์ จะเลื่อนไปนัดในรอบถัดไปของ รพ.สต.ควนลัง โดยอัตโนมัติ</li>
+          <li>เพิ่มป้ายแจ้งเตือนสีแดง <b>"⛔ ไม่ควรฉีดในวันนี้"</b> เมื่อตรวจสอบจากอายุปัจจุบันแล้วพบว่าเด็กยังอายุไม่ถึงเกณฑ์กำหนด</li>
+          <li>เพิ่มแถบแสดงเวอร์ชัน วันที่อัปเดตล่าสุด และปุ่ม <b>"✨ อะไรใหม่"</b> แสดงประวัติการพัฒนาแอป</li>
+        </ul>
+      </div>
+
+      <!-- Version 1.3.0 -->
+      <div class="changelog-item">
+        <div class="changelog-ver-row">
+          <span class="changelog-ver">เวอร์ชัน 1.3.0</span>
+        </div>
+        <div class="changelog-date">📅 อัปเดตเมื่อ: 9 พฤศจิกายน 2569</div>
+        <ul class="changelog-list">
+          <li>เพิ่มแท็บเมนูใหม่ <b>"🛡️ วัคซีน PCV"</b> แบบ Segmented Control สลับหน้าจอได้ทันทีโดยไม่ต้องกรอกวันเกิดซ้ำ</li>
+          <li>รองรับการคำนวณวันนัดฉีดวัคซีน PCV ครบทั้ง 3 เงื่อนไข (เริ่มเข็มแรกที่อายุ 3 เดือน, 5 เดือน และ 9 เดือน) ให้ตรงกับตารางนัดของ รพ.สต.ควนลัง</li>
+        </ul>
+      </div>
+
+      <!-- Version 1.2.0 -->
+      <div class="changelog-item">
+        <div class="changelog-ver-row">
+          <span class="changelog-ver">เวอร์ชัน 1.2.0</span>
+        </div>
+        <div class="changelog-date">📅 อัปเดตเมื่อ: 26 ตุลาคม 2569</div>
+        <ul class="changelog-list">
+          <li>ปรับปรุงเกณฑ์การจ่ายยาน้ำเสริมธาตุเหล็ก <b>Ferdek Drops</b> ให้ตรงตามแนวทางปฏิบัติล่าสุด:
+            <br>- อายุ 6 – 30 เดือน: ทาน 0.5 ml สัปดาห์ละ 1 ครั้ง
+            <br>- อายุ 31 – 48 เดือน: ทาน 1.0 ml สัปดาห์ละ 1 ครั้ง
+          </li>
+        </ul>
+      </div>
+
+      <!-- Version 1.1.0 -->
+      <div class="changelog-item">
+        <div class="changelog-ver-row">
+          <span class="changelog-ver">เวอร์ชัน 1.1.0</span>
+        </div>
+        <div class="changelog-date">📅 อัปเดตเมื่อ: 26 ตุลาคม 2569</div>
+        <ul class="changelog-list">
+          <li>นำระบบขึ้นออนไลน์ผ่าน <b>GitHub Pages</b> รองรับการเพิ่มไอคอนไว้บนหน้าจอโฮม (Add to Home Screen) บน iPhone</li>
+          <li>ปรับปรุงการคำนวณช่วงอายุของ Ferdek Drops ระยะที่ 1</li>
+        </ul>
+      </div>
+
+      <!-- Version 1.0.0 -->
+      <div class="changelog-item">
+        <div class="changelog-ver-row">
+          <span class="changelog-ver">เวอร์ชัน 1.0.0 (เปิดตัวครั้งแรก)</span>
+        </div>
+        <div class="changelog-date">📅 สร้างเมื่อ: 25 ตุลาคม 2569</div>
+        <ul class="changelog-list">
+          <li>ออกแบบหน้าเว็บแบบ Responsive สไตล์ iOS เหมาะสำหรับหน้าจอสมาร์ตโฟน iPhone</li>
+          <li>ระบบกรอกวันเกิดแยกช่อง วัน / เดือน / ปี (พ.ศ.) เพื่อความรวดเร็วในการใช้งานหน้าคลินิก</li>
+          <li>ผูกฐานข้อมูลตารางวันให้บริการฉีดวัคซีน รพ.สต.ควนลัง (พ.ศ. 2568 – 2571) แจ้งเตือนสัปดาห์ที่ 2 และ 4 อัตโนมัติ</li>
+          <li>คำนวณขนาดยาพาราเซตามอลไซรัปตามน้ำหนักตัวเด็ก (10 กก. = 1 ช้อนชา) พร้อมข้อความเตือนกระพริบให้ถามยาก่อนจ่าย</li>
+          <li>ระบบตรวจสอบเกณฑ์คัดกรอง 3 รายการ: ตรวจภาวะโลหิตจาง (เจาะ Hct), ตรวจพัฒนาการ (DSPM) และตรวจสุขภาพช่องปากและฟัน</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-modal-ok" onclick="closeChangelogModal()">รับทราบ</button>
+    </div>
+  </div>
 </div>
 
 <script>
+  // ฟังก์ชันเปิด-ปิด Pop-up อะไรใหม่
+  function openChangelogModal() {
+    document.getElementById('changelogModal').classList.add('show');
+  }
+
+  function closeChangelogModal() {
+    document.getElementById('changelogModal').classList.remove('show');
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target.id === 'changelogModal') {
+      closeChangelogModal();
+    }
+  }
+
   // 1. ตารางวันนัดวัคซีน รพ.สต.ควนลัง พ.ศ. 2568 - 2571
   const CLINIC_SCHEDULE = [
     // 2568
@@ -417,7 +954,7 @@
     { y: 2570, m: 6,  w2: "2570-06-09", w4: "2570-06-23" },
     { y: 2570, m: 7,  w2: "2570-07-14", w4: "2570-07-21" },
     { y: 2570, m: 8,  w2: "2570-08-11", w4: "2570-08-25" },
-    { y: 2570, m: 9,  w2: "2570-08-08", w4: "2570-09-22" },
+    { y: 2570, m: 9,  w2: "2570-09-08", w4: "2570-09-22" },
     { y: 2570, m: 10, w2: "2570-10-20", w4: "2570-10-27" },
     { y: 2570, m: 11, w2: "2570-11-10", w4: "2570-11-24" },
     { y: 2570, m: 12, w2: "2570-12-08", w4: "2570-12-22" },
@@ -441,18 +978,53 @@
     "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
   ];
 
-  // 2. เกณฑ์วัคซีนตามสมุดบันทึกสุขภาพเด็ก
+  // 2. เกณฑ์วัคซีนพื้นฐาน
   const VACCINE_TARGETS = [
-    { key: "1m",  months: 1,  name: "อายุ 1 เดือน", vaccines: "HBV2" },
-    { key: "2m",  months: 2,  name: "อายุ 2 เดือน", vaccines: "DHB1 + IPV1, Rota 1" },
-    { key: "4m",  months: 4,  name: "อายุ 4 เดือน", vaccines: "DHB2 + IPV2, Rota 2" },
-    { key: "6m",  months: 6,  name: "อายุ 6 เดือน", vaccines: "DHB3 + OPV3, Rota 3" },
-    { key: "9m",  months: 9,  name: "อายุ 9 เดือน", vaccines: "MMR1" },
-    { key: "12m", months: 12, name: "อายุ 1 ปี",    vaccines: "JE1" },
-    { key: "18m", months: 18, name: "อายุ 1 ปี 6 เดือน", vaccines: "DTP4 + OPV4, MMR2" },
-    { key: "30m", months: 30, name: "อายุ 2 ปี 6 เดือน", vaccines: "JE2" },
-    { key: "48m", months: 48, name: "อายุ 4 ปี",    vaccines: "OPV5, DTP5" }
+    { key: "1m",  months: 1,  name: "อายุเต็ม 1 เดือน", vaccines: "HBV2" },
+    { key: "2m",  months: 2,  name: "อายุเต็ม 2 เดือน", vaccines: "DHB1 + IPV1, Rota 1" },
+    { key: "4m",  months: 4,  name: "อายุเต็ม 4 เดือน", vaccines: "DHB2 + IPV2, Rota 2" },
+    { key: "6m",  months: 6,  name: "อายุเต็ม 6 เดือน", vaccines: "DHB3 + OPV3, Rota 3" },
+    { key: "9m",  months: 9,  name: "อายุเต็ม 9 เดือน", vaccines: "MMR1" },
+    { key: "12m", months: 12, name: "อายุเต็ม 1 ปี (12 เดือน)", vaccines: "JE1" },
+    { key: "18m", months: 18, name: "อายุเต็ม 1 ปี 6 เดือน", vaccines: "DTP4 + OPV4, MMR2" },
+    { key: "30m", months: 30, name: "อายุเต็ม 2 ปี 6 เดือน", vaccines: "JE2" },
+    { key: "48m", months: 48, name: "อายุเต็ม 4 ปี", vaccines: "OPV5, DTP5" }
   ];
+
+  // 3. เงื่อนไขวัคซีน PCV ทั้ง 3 รูปแบบ
+  const PCV_CONDITIONS = {
+    1: {
+      minStartMonths: 3,
+      name: "เงื่อนไขที่ 1 (เริ่มฉีดเมื่ออายุครบ 3 เดือนบริบูรณ์)",
+      steps: [
+        { dose: "PCV เข็มที่ 1", months: 3,  ageLabel: "อายุเต็ม 3 เดือน" },
+        { dose: "PCV เข็มที่ 2", months: 5,  ageLabel: "อายุเต็ม 5 เดือน" },
+        { dose: "PCV เข็มที่ 3", months: 12, ageLabel: "อายุเต็ม 1 ปี (12 เดือน)" }
+      ]
+    },
+    2: {
+      minStartMonths: 5,
+      name: "เงื่อนไขที่ 2 (เริ่มฉีดเมื่ออายุครบ 5 เดือนบริบูรณ์)",
+      steps: [
+        { dose: "PCV เข็มที่ 1", months: 5,  ageLabel: "อายุเต็ม 5 เดือน" },
+        { dose: "PCV เข็มที่ 2", months: 7,  ageLabel: "อายุเต็ม 7 เดือน" },
+        { dose: "PCV เข็มที่ 3", months: 12, ageLabel: "อายุเต็ม 1 ปี (12 เดือน)" }
+      ]
+    },
+    3: {
+      minStartMonths: 9,
+      name: "เงื่อนไขที่ 3 (เริ่มฉีดเมื่ออายุครบ 9 เดือนบริบูรณ์)",
+      steps: [
+        { dose: "PCV เข็มที่ 1", months: 9,  ageLabel: "อายุเต็ม 9 เดือน" },
+        { dose: "PCV เข็มที่ 2", months: 12, ageLabel: "อายุเต็ม 1 ปี (12 เดือน)" },
+        { dose: "PCV เข็มที่ 3", months: 16, ageLabel: "อายุเต็ม 1 ปี 4 เดือน (16 เดือน)" }
+      ]
+    }
+  };
+
+  let currentTab = 'main';
+  let currentPcvCondition = 1;
+  let hasCalculated = false;
 
   // Initialize Input Dropdowns
   window.addEventListener('DOMContentLoaded', () => {
@@ -469,21 +1041,62 @@
       const opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;
-      if (y === 2568) opt.selected = true;
+      if (y === 2569) opt.selected = true;
       yearSelect.appendChild(opt);
     }
   });
 
-  // แปลงวัน พ.ศ. เป็น Date Object
+  function switchTab(tabName) {
+    currentTab = tabName;
+    const btnMain = document.getElementById('tabBtnMain');
+    const btnPcv = document.getElementById('tabBtnPcv');
+    const header = document.getElementById('mainHeader');
+    const headerTitle = document.getElementById('headerTitle');
+    const headerSub = document.getElementById('headerSub');
+    const weightGroup = document.getElementById('weightInputGroup');
+
+    if (tabName === 'main') {
+      btnMain.classList.add('active');
+      btnPcv.classList.remove('active');
+      header.classList.remove('pcv-mode');
+      headerTitle.textContent = "🗓️ ตารางนัดวัคซีน รพ.สต.ควนลัง";
+      headerSub.textContent = "คำนวณวันนัดเมื่ออายุครบบริบูรณ์จริง & การตรวจคัดกรอง";
+      weightGroup.style.display = 'flex';
+    } else {
+      btnPcv.classList.add('active');
+      btnMain.classList.remove('active');
+      header.classList.add('pcv-mode');
+      headerTitle.textContent = "🛡️ ตารางนัดวัคซีน PCV รพ.สต.ควนลัง";
+      headerSub.textContent = "ต้องมีอายุเต็มบริบูรณ์ตามเกณฑ์จริง หากไม่ถึงเกณฑ์จะเลื่อนเป็นรอบถัดไป";
+      weightGroup.style.display = 'none';
+    }
+
+    if (hasCalculated) {
+      updateVisibleSections();
+    } else {
+      calculateAll(true);
+    }
+  }
+
+  function updateVisibleSections() {
+    document.getElementById('tabContentMain').style.display = (currentTab === 'main') ? 'flex' : 'none';
+    document.getElementById('tabContentPcv').style.display = (currentTab === 'pcv') ? 'flex' : 'none';
+  }
+
+  function autoRecalculate() {
+    if (hasCalculated) {
+      calculateAll(false);
+    }
+  }
+
   function parseBuddhistDate(strBE) {
     const parts = strBE.split("-");
     const yearAD = parseInt(parts[0], 10) - 543;
     const month = parseInt(parts[1], 10) - 1;
     const day = parseInt(parts[2], 10);
-    return new Date(yearAD, month, day);
+    return new Date(yearAD, month, day, 0, 0, 0, 0);
   }
 
-  // แปลงเป็นวันที่ภาษาไทย
   function formatThaiDisplayDate(strBE) {
     const parts = strBE.split("-");
     const d = parseInt(parts[2], 10);
@@ -492,70 +1105,260 @@
     return `${d} ${THAI_MONTH_NAMES[m]} ${y}`;
   }
 
-  // คำนวณวันคลินิกที่ใกล้ที่สุดและไม่ก่อนเป้าหมาย
-  function findClinicAppointment(targetDateAD) {
-    let best = null;
-    let minDiff = Infinity;
-
-    for (const item of CLINIC_SCHEDULE) {
-      const d2 = parseBuddhistDate(item.w2);
-      const d4 = parseBuddhistDate(item.w4);
-
-      if (d2 >= targetDateAD) {
-        const diff = d2 - targetDateAD;
-        if (diff < minDiff) {
-          minDiff = diff;
-          best = { dateStr: item.w2, week: "สัปดาห์ที่ 2", dateObj: d2 };
-        }
-      }
-      if (d4 >= targetDateAD) {
-        const diff = d4 - targetDateAD;
-        if (diff < minDiff) {
-          minDiff = diff;
-          best = { dateStr: item.w4, week: "สัปดาห์ที่ 4", dateObj: d4 };
-        }
-      }
-    }
-    return best;
+  function formatADToThaiDate(dateObj) {
+    const d = dateObj.getDate();
+    const m = dateObj.getMonth() + 1;
+    const y = dateObj.getFullYear() + 543;
+    return `${d} ${THAI_MONTH_NAMES[m]} ${y}`;
   }
 
-  function calculateAll() {
+  function getExactFullAgeDate(birthDate, targetMonths) {
+    const targetYear = birthDate.getFullYear() + Math.floor((birthDate.getMonth() + targetMonths) / 12);
+    const targetMonth = (birthDate.getMonth() + targetMonths) % 12;
+    const birthDay = birthDate.getDate();
+
+    const daysInTargetMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+
+    if (birthDay <= daysInTargetMonth) {
+      return new Date(targetYear, targetMonth, birthDay, 0, 0, 0, 0);
+    } else {
+      return new Date(targetYear, targetMonth + 1, 1, 0, 0, 0, 0);
+    }
+  }
+
+  function getExactAgeAtDate(birthDate, checkDate) {
+    const b = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate(), 0, 0, 0, 0);
+    const c = new Date(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate(), 0, 0, 0, 0);
+
+    let y = c.getFullYear() - b.getFullYear();
+    let m = c.getMonth() - b.getMonth();
+    let d = c.getDate() - b.getDate();
+
+    if (d < 0) {
+      m--;
+      const prevMonthLastDay = new Date(c.getFullYear(), c.getMonth(), 0).getDate();
+      d += prevMonthLastDay;
+    }
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+
+    const totalFullMonths = (y * 12) + m;
+    return { years: y, months: m, days: d, totalFullMonths: totalFullMonths };
+  }
+
+  function findStrictClinicAppointment(birthDate, requiredMonths) {
+    const fullAgeDate = getExactFullAgeDate(birthDate, requiredMonths);
+
+    const allSlots = [];
+    for (const item of CLINIC_SCHEDULE) {
+      allSlots.push({ dateStr: item.w2, week: "สัปดาห์ที่ 2", dateObj: parseBuddhistDate(item.w2), m: item.m, y: item.y });
+      allSlots.push({ dateStr: item.w4, week: "สัปดาห์ที่ 4", dateObj: parseBuddhistDate(item.w4), m: item.m, y: item.y });
+    }
+
+    for (let i = 0; i < allSlots.length; i++) {
+      const slot = allSlots[i];
+      const ageAtSlot = getExactAgeAtDate(birthDate, slot.dateObj);
+
+      if (slot.dateObj >= fullAgeDate && ageAtSlot.totalFullMonths >= requiredMonths) {
+        let shiftedFrom = null;
+        if (i > 0) {
+          const prevSlot = allSlots[i - 1];
+          const targetMonthBEYear = fullAgeDate.getFullYear() + 543;
+          const targetMonthNum = fullAgeDate.getMonth() + 1;
+          if (prevSlot.y === targetMonthBEYear && prevSlot.m === targetMonthNum && prevSlot.dateObj < fullAgeDate) {
+            shiftedFrom = prevSlot;
+          }
+        }
+        return {
+          ...slot,
+          fullAgeDate: fullAgeDate,
+          shiftedFrom: shiftedFrom
+        };
+      }
+    }
+    return null;
+  }
+
+  function selectPcvCondition(condNum) {
+    currentPcvCondition = condNum;
+    for (let i = 1; i <= 3; i++) {
+      const btn = document.getElementById(`pcvCondBtn${i}`);
+      if (i === condNum) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+    renderPcvTimeline();
+  }
+
+  function renderPcvTimeline() {
+    const day = parseInt(document.getElementById('dobDay').value, 10);
+    const month = parseInt(document.getElementById('dobMonth').value, 10);
+    const yearBE = parseInt(document.getElementById('dobYear').value, 10);
+    const birthDate = new Date(yearBE - 543, month - 1, day, 0, 0, 0, 0);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+
+    const currentAge = getExactAgeAtDate(birthDate, today);
+    const condObj = PCV_CONDITIONS[currentPcvCondition];
+
+    const condWarnEl = document.getElementById('pcvCondWarning');
+    if (currentAge.totalFullMonths < condObj.minStartMonths) {
+      const firstDoseFullDate = getExactFullAgeDate(birthDate, condObj.minStartMonths);
+      condWarnEl.style.display = 'flex';
+      condWarnEl.innerHTML = `
+        <div class="alert-title">⛔ ไม่ควรฉีดตาม${condObj.name}ในวันนี้</div>
+        <div class="alert-desc">
+          เนื่องจากอายุปัจจุบันของเด็กคือ <b>${currentAge.years} ปี ${currentAge.months} เดือน ${currentAge.days} วัน</b> (รวม ${currentAge.totalFullMonths} เดือนเต็ม) 
+          ซึ่ง<b>อายุยังไม่เต็ม ${condObj.minStartMonths} เดือนบริบูรณ์</b> ต้องรอให้อายุครบกำหนดในวันที่ <b>${formatADToThaiDate(firstDoseFullDate)}</b> จึงจะเริ่มฉีดเข็มที่ 1 ในรอบคลินิกถัดไปได้
+        </div>
+      `;
+    } else {
+      condWarnEl.style.display = 'none';
+    }
+
+    const pcvContainer = document.getElementById('pcvTimelineContainer');
+    pcvContainer.innerHTML = '';
+
+    condObj.steps.forEach((step) => {
+      const clinicMatch = findStrictClinicAppointment(birthDate, step.months);
+      const isAgeReachedToday = currentAge.totalFullMonths >= step.months;
+
+      const card = document.createElement('div');
+      card.className = 'pcv-step-card' + (!isAgeReachedToday ? ' not-eligible' : '');
+
+      const eligBadgeHtml = isAgeReachedToday
+        ? `<div class="elig-badge ready-inject">✅ อายุปัจจุบันครบเกณฑ์ (${step.ageLabel})</div>`
+        : `<div class="elig-badge no-inject">⛔ ไม่ควรฉีดในวันนี้ (อายุยังไม่ครบ ${step.months} เดือนเต็ม)</div>`;
+
+      if (clinicMatch) {
+        const isPast = clinicMatch.dateObj < today;
+        const weekClass = clinicMatch.week === "สัปดาห์ที่ 2" ? "w2" : "w4";
+        const shiftHtml = clinicMatch.shiftedFrom
+          ? `<div class="shift-notice">↪️ เลื่อนจาก ${formatThaiDisplayDate(clinicMatch.shiftedFrom.dateStr)} (${clinicMatch.shiftedFrom.week}) เนื่องจากวันดังกล่าวอายุยังไม่เต็ม ${step.months} เดือนบริบูรณ์</div>`
+          : '';
+
+        card.innerHTML = `
+          <div class="tl-header">
+            <span class="pcv-step-title">💉 ${step.dose} (${step.ageLabel})</span>
+            <span class="tl-week-badge ${weekClass}">${clinicMatch.week}</span>
+          </div>
+          ${eligBadgeHtml}
+          <div class="tl-date">
+            📅 วันนัดฉีด: ${formatThaiDisplayDate(clinicMatch.dateStr)}
+            ${isPast ? '<span style="font-size:0.75rem; color:#8E8E93; font-weight:normal;">(วันนัดผ่านมาแล้ว)</span>' : ''}
+          </div>
+          ${shiftHtml}
+          <div class="pcv-target-info">
+            (วันที่อายุครบ ${step.months} เดือนบริบูรณ์จริง: ${formatADToThaiDate(clinicMatch.fullAgeDate)})
+          </div>
+        `;
+      } else {
+        const fullAgeDate = getExactFullAgeDate(birthDate, step.months);
+        card.innerHTML = `
+          <div class="tl-header">
+            <span class="pcv-step-title">💉 ${step.dose} (${step.ageLabel})</span>
+            <span class="tl-week-badge">เกินรอบตาราง</span>
+          </div>
+          ${eligBadgeHtml}
+          <div class="tl-date" style="font-size:0.9rem; color:#8E8E93;">
+            เกินปี พ.ศ. 2571 ในฐานข้อมูลตารางนัด
+          </div>
+          <div class="pcv-target-info">
+            (วันที่อายุครบ ${step.months} เดือนบริบูรณ์จริง: ${formatADToThaiDate(fullAgeDate)})
+          </div>
+        `;
+      }
+
+      pcvContainer.appendChild(card);
+    });
+  }
+
+  function calculateAll(autoSelectPcv = true) {
     const day = parseInt(document.getElementById('dobDay').value, 10);
     const month = parseInt(document.getElementById('dobMonth').value, 10);
     const yearBE = parseInt(document.getElementById('dobYear').value, 10);
     const weight = parseFloat(document.getElementById('childWeight').value);
 
     const yearAD = yearBE - 543;
-    const birthDate = new Date(yearAD, month - 1, day);
-    const today = new Date();
+    const birthDate = new Date(yearAD, month - 1, day, 0, 0, 0, 0);
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+
+    if (birthDate.getMonth() !== (month - 1) || birthDate.getDate() !== day) {
+      alert("วันที่เลือกไม่มีอยู่จริงในเดือนนั้น กรุณาตรวจสอบวันเดือนปีเกิดอีกครั้ง");
+      return;
+    }
 
     if (birthDate > today) {
       alert("วันเดือนปีเกิดต้องไม่เกินวันปัจจุบัน");
       return;
     }
 
-    // คำนวณอายุแบบละเอียด (ปี เดือน วัน)
-    let curY = today.getFullYear() - birthDate.getFullYear();
-    let curM = today.getMonth() - birthDate.getMonth();
-    let curD = today.getDate() - birthDate.getDate();
+    hasCalculated = true;
+    updateVisibleSections();
 
-    if (curD < 0) {
-      curM--;
-      const prevMonthLastDay = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-      curD += prevMonthLastDay;
+    const currentAge = getExactAgeAtDate(birthDate, today);
+    const curY = currentAge.years;
+    const curM = currentAge.months;
+    const curD = currentAge.days;
+    const totalAgeMonths = currentAge.totalFullMonths;
+
+    const ageText = `👶 อายุปัจจุบัน: <b>${curY} ปี ${curM} เดือน ${curD} วัน</b> (อายุเต็ม ${totalAgeMonths} เดือนบริบูรณ์)`;
+
+    document.getElementById('ageBadgeMain').innerHTML = ageText;
+    document.getElementById('ageBadgePcv').innerHTML = ageText;
+
+    const pcvOverallEl = document.getElementById('pcvOverallStatus');
+    if (totalAgeMonths < 3) {
+      const full3mDate = getExactFullAgeDate(birthDate, 3);
+      pcvOverallEl.className = "status-alert danger";
+      pcvOverallEl.innerHTML = `
+        <div class="alert-title">⛔ ไม่ควรฉีดวัคซีน PCV ในขณะนี้ (อายุยังไม่ถึงเกณฑ์ขั้นต่ำ 3 เดือนเต็ม)</div>
+        <div class="alert-desc">
+          ปัจจุบันเด็กเพิ่งมีอายุเต็ม <b>${totalAgeMonths} เดือน (${curD} วัน)</b> ยังไม่ครบ 3 เดือนบริบูรณ์ 
+          ให้เลื่อนไปนัดฉีดเข็มที่ 1 หลังวันที่ <b>${formatADToThaiDate(full3mDate)}</b> ตามตารางด้านล่าง
+        </div>
+      `;
+    } else {
+      pcvOverallEl.className = "status-alert success";
+      pcvOverallEl.innerHTML = `
+        <div class="alert-title">✅ อายุปัจจุบันถึงเกณฑ์สามารถรับวัคซีน PCV ได้</div>
+        <div class="alert-desc">เด็กมีอายุเต็ม ${totalAgeMonths} เดือนบริบูรณ์ สามารถเลือกเงื่อนไขการฉีดที่ตรงกับประวัติการรับวัคซีนได้</div>
+      `;
     }
-    if (curM < 0) {
-      curY--;
-      curM += 12;
+
+    [1, 2, 3].forEach((condNum) => {
+      const minM = PCV_CONDITIONS[condNum].minStartMonths;
+      const pill = document.getElementById(`pcvPill${condNum}`);
+      if (totalAgeMonths >= minM) {
+        pill.className = "cond-pill ok";
+        pill.textContent = "อายุครบเกณฑ์";
+      } else {
+        pill.className = "cond-pill not-yet";
+        pill.textContent = "ไม่ควรฉีด (อายุยังไม่เต็ม)";
+      }
+    });
+
+    let recommendedCond = 1;
+    if (totalAgeMonths >= 9) {
+      recommendedCond = 3;
+    } else if (totalAgeMonths >= 5) {
+      recommendedCond = 2;
+    } else {
+      recommendedCond = 1;
     }
 
-    const totalAgeMonths = (curY * 12) + curM;
+    if (autoSelectPcv) {
+      selectPcvCondition(recommendedCond);
+    } else {
+      renderPcvTimeline();
+    }
 
-    // แสดง Badge อายุ
-    document.getElementById('resultsArea').style.display = 'flex';
-    document.getElementById('ageBadge').innerHTML = `👶 อายุปัจจุบัน: <b>${curY} ปี ${curM} เดือน ${curD} วัน</b> (รวม ${totalAgeMonths} เดือน ${curD} วัน)`;
-
-    // 1. ตรวจสอบคัดกรองภาวะโลหิตจาง (Hct)
+    // 1. คัดกรองภาวะโลหิตจาง (Hct)
     const hctEl = document.getElementById('hctAlert');
     if (totalAgeMonths >= 6 && totalAgeMonths <= 11) {
       hctEl.className = "status-alert active";
@@ -571,7 +1374,7 @@
                          <div class="alert-desc">รอบตรวจคือช่วง 6 - 11 เดือน 29 วัน และ 3 - 5 ปี 11 เดือน 29 วัน</div>`;
     }
 
-    // 2. ตรวจสอบพัฒนาการเด็ก (DSPM)
+    // 2. ตรวจพัฒนาการเด็ก (DSPM)
     const dspmEl = document.getElementById('dspmAlert');
     if (totalAgeMonths === 9) {
       dspmEl.className = "status-alert active";
@@ -588,10 +1391,10 @@
     } else {
       dspmEl.className = "status-alert normal";
       dspmEl.innerHTML = `<div class="alert-title">🧠 ตรวจพัฒนาการ (DSPM) : ไม่อยู่ในรอบตรวจคัดกรอง</div>
-                          <div class="alert-desc">เกณฑ์ส่งตรวจคืออายุ 9 เดือน, 1 ปี 6 เดือน, 2 ปี 6 เดือน (+ไม่เกิน 29 วัน)</div>`;
+                          <div class="alert-desc">เกณฑ์ส่งตรวจคืออายุเต็ม 9 เดือน, 1 ปี 6 เดือน, 2 ปี 6 เดือน (+ไม่เกิน 29 วัน)</div>`;
     }
 
-    // 3. ตรวจสอบส่งตรวจฟัน
+    // 3. ตรวจฟัน
     const dentalEl = document.getElementById('dentalAlert');
     if (totalAgeMonths === 9 || totalAgeMonths === 18 || totalAgeMonths === 30) {
       dentalEl.className = "status-alert active";
@@ -603,7 +1406,7 @@
                             <div class="alert-desc">เกณฑ์ส่งตรวจคือช่วง 9 เดือน, 1 ปี 6 เดือน และ 2 ปี 6 เดือน</div>`;
     }
 
-    // 4. คำนวณปริมาณ Ferdek Drops (เกณฑ์ใหม่: 6-30 เดือน = 0.5 ml, 31-48 เดือน = 1.0 ml)
+    // 4. คำนวณปริมาณ Ferdek Drops (6-30 เดือน = 0.5 ml, 31-48 เดือน = 1.0 ml)
     const ferdekEl = document.getElementById('ferdekDose');
     if (totalAgeMonths >= 6 && totalAgeMonths <= 30) {
       ferdekEl.innerHTML = `กิน <b>0.5 มิลลิลิตร (ml)</b> สัปดาห์ละ 1 ครั้ง`;
@@ -639,39 +1442,56 @@
       paraEl.innerHTML = paraText;
     }
 
-    // 6. คำนวณตารางวัคซีนและจับคู่กับวันบริการ รพ.สต.ควนลัง
+    // 6. คำนวณตารางวัคซีนพื้นฐาน (ตรวจอายุเต็มบริบูรณ์จริง)
     const tlContainer = document.getElementById('timelineContainer');
     tlContainer.innerHTML = '';
 
     VACCINE_TARGETS.forEach((item) => {
-      const targetAD = new Date(birthDate.getFullYear(), birthDate.getMonth() + item.months, birthDate.getDate());
-      const clinicMatch = findClinicAppointment(targetAD);
+      const clinicMatch = findStrictClinicAppointment(birthDate, item.months);
+      const isAgeReachedToday = totalAgeMonths >= item.months;
 
       const div = document.createElement('div');
       div.className = 'timeline-item';
 
+      const eligBadgeHtml = isAgeReachedToday
+        ? `<div class="elig-badge ready-inject">✅ อายุถึงเกณฑ์ฉีดได้</div>`
+        : `<div class="elig-badge no-inject">⛔ ไม่ควรฉีดในวันนี้ (อายุยังไม่เต็ม ${item.months} เดือน)</div>`;
+
       if (clinicMatch) {
         const isPast = clinicMatch.dateObj < today;
         const weekClass = clinicMatch.week === "สัปดาห์ที่ 2" ? "w2" : "w4";
+        const shiftHtml = clinicMatch.shiftedFrom
+          ? `<div class="shift-notice">↪️ เลื่อนจาก ${formatThaiDisplayDate(clinicMatch.shiftedFrom.dateStr)} (${clinicMatch.shiftedFrom.week}) เพราะวันดังกล่าวอายุยังไม่ครบ ${item.months} เดือนบริบูรณ์</div>`
+          : '';
 
         div.innerHTML = `
           <div class="tl-header">
             <span class="tl-age">${item.name}</span>
             <span class="tl-week-badge ${weekClass}">${clinicMatch.week}</span>
           </div>
+          ${eligBadgeHtml}
           <div class="tl-date">
-            📅 ${formatThaiDisplayDate(clinicMatch.dateStr)}
-            ${isPast ? '<span style="font-size:0.75rem; color:#8E8E93; font-weight:normal;">(ผ่านมาแล้ว)</span>' : ''}
+            📅 วันนัดฉีด: ${formatThaiDisplayDate(clinicMatch.dateStr)}
+            ${isPast ? '<span style="font-size:0.75rem; color:#8E8E93; font-weight:normal;">(วันนัดผ่านมาแล้ว)</span>' : ''}
+          </div>
+          ${shiftHtml}
+          <div class="pcv-target-info">
+            (วันที่อายุครบ ${item.months} เดือนบริบูรณ์จริง: ${formatADToThaiDate(clinicMatch.fullAgeDate)})
           </div>
           <div class="tl-vaccines">💉 <b>วัคซีน:</b> ${item.vaccines}</div>
         `;
       } else {
+        const fullAgeDate = getExactFullAgeDate(birthDate, item.months);
         div.innerHTML = `
           <div class="tl-header">
             <span class="tl-age">${item.name}</span>
             <span class="tl-week-badge">เกินรอบตาราง</span>
           </div>
+          ${eligBadgeHtml}
           <div class="tl-date" style="font-size:0.88rem; color:#8E8E93;">เกินปี พ.ศ. 2571 ในฐานข้อมูล</div>
+          <div class="pcv-target-info">
+            (วันที่อายุครบ ${item.months} เดือนบริบูรณ์จริง: ${formatADToThaiDate(fullAgeDate)})
+          </div>
           <div class="tl-vaccines">💉 <b>วัคซีน:</b> ${item.vaccines}</div>
         `;
       }
